@@ -42,7 +42,7 @@ const ProtectedRoute = ({
     return <Navigate to="/login" />;
   }
   if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
   return element;
 };
@@ -95,24 +95,24 @@ function App() {
             </RootLayout>
           }
         />
-<Route
-  path="/templates"
-  element={
-    <RootLayout>
-      <TemplatesComponent />
-    </RootLayout>
-  }
-/>
-<Route
-  path="/writing-assistant"
-  element={
-    <RootLayout>
-      <WritingAssistantComponent />
-    </RootLayout>
-  }
-/>
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<DashboardComponent />} />
+        <Route
+          path="/templates"
+          element={
+            <RootLayout>
+              <TemplatesComponent />
+            </RootLayout>
+          }
+        />
+        <Route
+          path="/writing-assistant"
+          element={
+            <RootLayout>
+              <WritingAssistantComponent />
+            </RootLayout>
+          }
+        />
+        <Route path="/dashboard" element={<ProtectedRoute element={<DashboardLayout />} allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN]} />}>
+          <Route index element={<ProtectedRoute element={<DashboardComponent />} allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN]} />} />
 
           <Route
             path="post-lists"

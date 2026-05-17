@@ -53,7 +53,7 @@ const SignUpComponent = () => {
       try {
         const res = await emailVerify({ ...otpPayload }).unwrap();
         if (res) {
-          const { otp, expiresAt } = res;
+          const { otp, expiresAt } = res.data;
           setServerOtp(otp);
           setExpiredAt(expiresAt);
           toast.success("OTP sent to your email");

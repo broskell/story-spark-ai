@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { isLoggedIn, removeUserInfo } from "../../services/auth.service";
+import { isLoggedIn, removeUserInfo, getUserInfo } from "../../services/auth.service";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logoNew.png";
 
@@ -14,6 +14,9 @@ const NavListComponent: React.FC<INavListComponentProps> = ({
 }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(isLoggedIn());
+
+  const user = getUserInfo();
+  const isAdmin = user?.role === "admin" || user?.role === "super_admin";
 
   const handelLogout = () => {
     removeUserInfo();
@@ -35,7 +38,7 @@ const NavListComponent: React.FC<INavListComponentProps> = ({
             <Link to="/" className="text-gray-400 hover:text-custom transition">HOME</Link>
             <Link to="/explore" className="text-gray-400 hover:text-custom transition">EXPLORE</Link>
             <Link to="/community" className="text-gray-400 hover:text-custom transition">COMMUNITY</Link>
-            {isLogin && (
+            {isLogin && isAdmin && (
               <Link to="/dashboard" className="text-gray-400 hover:text-custom transition">DASHBOARD</Link>
             )}
           </div>
@@ -80,7 +83,7 @@ const NavListComponent: React.FC<INavListComponentProps> = ({
           <Link to="/" className="text-gray-400 hover:text-white py-2">HOME</Link>
           <Link to="/explore" className="text-gray-400 hover:text-white py-2">EXPLORE</Link>
           <Link to="/community" className="text-gray-400 hover:text-white py-2">COMMUNITY</Link>
-          {isLogin && (
+          {isLogin && isAdmin && (
             <Link to="/dashboard" className="text-gray-400 hover:text-white py-2">DASHBOARD</Link>
           )}
           <button type="button" className="text-left text-gray-400 py-2"
