@@ -13,10 +13,10 @@ const DashboardComponent = () => {
     return <LoadingAnimation />;
   }
   return (
-    <div>
+    <div className="space-y-6">
       {data && <DashboardAnalysisHeader data={data} />}
       {data && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <UsersPieChart data={data.users} />
           <SubscriptionChart data={data.subscriptionTypes} />
           <PostsPerMonthChart perMonth={data.posts.perMonth} />

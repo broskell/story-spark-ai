@@ -3,21 +3,21 @@ import { DashboardAnalysis } from "../../models/analysis";
 
 const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }) => {
   return (
-    <div className="min-h-screen bg-slate-800 p-6">
-      <h1 className="text-3xl font-bold text-gray-400 mb-8">
+    <div className="space-y-6 rounded-3xl bg-slate-800 p-4 sm:p-6">
+      <h1 className="text-2xl font-bold text-gray-200 sm:text-3xl">
         Dashboard Analysis Header Overview
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-blue-500/10 rounded-lg shadow p-6">
-          <div className="flex items-center justify-between">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="min-w-0 rounded-lg bg-blue-500/10 p-5 shadow">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-gray-400 text-sm font-medium">Total Users</p>
-              <h3 className="text-2xl font-bold text-gray-300">
+              <p className="text-sm font-medium text-gray-400">Total Users</p>
+              <h3 className="text-2xl font-bold text-gray-100">
                 {data.users.total}
               </h3>
             </div>
-            <div className="bg-blue-300 p-3 rounded-full">
+            <div className="self-start rounded-full bg-blue-300 p-3">
               <svg
                 className="w-6 h-6 text-blue-600"
                 fill="none"
@@ -33,12 +33,12 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
               </svg>
             </div>
           </div>
-          <div className="mt-4 flex space-x-4">
-            <div>
+          <div className="mt-4 flex flex-wrap gap-4">
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Active</p>
               <p className="text-green-600 font-medium">{data.users.active}</p>
             </div>
-            <div>
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Writers</p>
               <p className="text-purple-600 font-medium">
                 {data.users.writers}
@@ -47,15 +47,15 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
           </div>
         </div>
 
-        <div className="bg-blue-500/10 rounded-lg shadow p-6">
-          <div className="flex items-center justify-between">
+        <div className="min-w-0 rounded-lg bg-blue-500/10 p-5 shadow">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-gray-400 text-sm font-medium">Total Posts</p>
-              <h3 className="text-2xl font-bold text-gray-300">
+              <p className="text-sm font-medium text-gray-400">Total Posts</p>
+              <h3 className="text-2xl font-bold text-gray-100">
                 {data.posts.total}
               </h3>
             </div>
-            <div className="bg-green-300 p-3 rounded-full">
+            <div className="self-start rounded-full bg-green-300 p-3">
               <svg
                 className="w-6 h-6 text-green-600"
                 fill="none"
@@ -71,14 +71,14 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
               </svg>
             </div>
           </div>
-          <div className="mt-4 flex space-x-4">
-            <div>
+          <div className="mt-4 flex flex-wrap gap-4">
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Published</p>
               <p className="text-blue-600 font-medium">
                 {data.posts.published}
               </p>
             </div>
-            <div>
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Featured</p>
               <p className="text-yellow-600 font-medium">
                 {data.posts.featured}
@@ -87,17 +87,17 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
           </div>
         </div>
 
-        <div className="bg-blue-500/10 rounded-lg shadow p-6">
-          <div className="flex items-center justify-between">
+        <div className="min-w-0 rounded-lg bg-blue-500/10 p-5 shadow">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-gray-400 text-sm font-medium">Subscriptions</p>
-              <h3 className="text-2xl font-bold text-gray-300">
+              <p className="text-sm font-medium text-gray-400">Subscriptions</p>
+              <h3 className="text-2xl font-bold text-gray-100">
                 {data.subscriptionTypes.free +
                   data.subscriptionTypes.pro +
                   data.subscriptionTypes.premium}
               </h3>
             </div>
-            <div className="bg-purple-300 p-3 rounded-full">
+            <div className="self-start rounded-full bg-purple-300 p-3">
               <svg
                 className="w-6 h-6 text-purple-600"
                 fill="none"
@@ -113,20 +113,20 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
               </svg>
             </div>
           </div>
-          <div className="mt-4 flex space-x-4">
-            <div>
+          <div className="mt-4 flex flex-wrap gap-4">
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Free</p>
               <p className="text-pink-600 font-medium">
                 {data.subscriptionTypes.free}
               </p>
             </div>
-            <div>
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Pro</p>
               <p className="text-blue-600 font-medium">
                 {data.subscriptionTypes.pro}
               </p>
             </div>
-            <div>
+            <div className="min-w-[72px]">
               <p className="text-indigo-500 text-xs">Premium</p>
               <p className="text-yellow-600 font-medium">
                 {data.subscriptionTypes.premium}
@@ -135,17 +135,17 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
           </div>
         </div>
 
-        <div className="bg-blue-500/10 rounded-lg shadow p-6">
-          <div className="flex items-center justify-between">
+        <div className="min-w-0 rounded-lg bg-blue-500/10 p-5 shadow">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-gray-400 text-sm font-medium">
                 Writer Applications
               </p>
-              <h3 className="text-2xl font-bold text-gray-300">
+              <h3 className="text-2xl font-bold text-gray-100">
                 {data.users.applyForWriter}
               </h3>
             </div>
-            <div className="bg-yellow-300 p-3 rounded-full">
+            <div className="self-start rounded-full bg-yellow-300 p-3">
               <svg
                 className="w-6 h-6 text-yellow-600"
                 fill="none"
@@ -182,16 +182,18 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-blue-500/10 rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-400 mb-4">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <div className="min-w-0 rounded-lg bg-blue-500/10 p-5 shadow">
+          <h3 className="mb-4 text-lg font-semibold text-gray-200">
             Posts per Month
           </h3>
           <div className="space-y-4">
             {Object.entries(data.posts.perMonth).map(([month, count]) => (
-              <div key={month} className="flex items-center">
-                <p className="w-24 text-indigo-500 text-sm">{month}</p>
-                <div className="flex-1 bg-gray-200 h-4 rounded-full">
+              <div key={month} className="flex items-center gap-3">
+                <p className="w-20 shrink-0 text-xs text-indigo-300 sm:w-24 sm:text-sm">
+                  {month}
+                </p>
+                <div className="min-w-0 flex-1 rounded-full bg-gray-200 h-4">
                   <div
                     className="bg-blue-500 h-4 rounded-full"
                     style={{
@@ -203,7 +205,7 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
                     }}
                   ></div>
                 </div>
-                <p className="w-12 text-right text-indigo-400 font-medium">
+                <p className="w-10 shrink-0 text-right text-sm font-medium text-indigo-300 sm:w-12">
                   {count as number}
                 </p>
               </div>
@@ -211,21 +213,21 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
           </div>
         </div>
 
-        <div className="bg-blue-500/10 rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-300 mb-4">
+        <div className="min-w-0 rounded-lg bg-blue-500/10 p-5 shadow">
+          <h3 className="mb-4 text-lg font-semibold text-gray-200">
             Topics Distribution
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {Object.entries(data.posts.topics).map(([topic, count]) => (
-              <div key={topic} className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-purple-300 flex items-center justify-center mr-3">
+              <div key={topic} className="flex min-w-0 items-center gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-300">
                   <span className="text-purple-800 text-xs font-bold">
                     {(((count as number) / data.posts.total) * 100).toFixed(0)}%
                   </span>
                 </div>
-                <div className="flex-1">
-                  <p className="text-gray-400 font-medium">{topic}</p>
-                  <p className="text-gray-300 text-sm">{count as number} posts</p>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-medium text-gray-200">{topic}</p>
+                  <p className="text-sm text-gray-400">{count as number} posts</p>
                 </div>
               </div>
             ))}
@@ -233,13 +235,13 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
         </div>
       </div>
 
-      <div className="bg-blue-500/10 rounded-lg shadow p-6 mt-6">
-        <h3 className="text-lg font-semibold text-gray-400 mb-4">
+      <div className="mt-6 rounded-lg bg-blue-500/10 p-5 shadow">
+        <h3 className="mb-4 text-lg font-semibold text-gray-200">
           User Status Overview
         </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-          <div className="flex items-center p-4 bg-gray-50 rounded-lg">
-            <div className="p-3 bg-blue-100 rounded-full mr-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="flex items-center rounded-lg bg-gray-50 p-4">
+            <div className="mr-4 rounded-full bg-blue-100 p-3">
               <svg
                 className="w-6 h-6 text-blue-600"
                 fill="none"
@@ -255,15 +257,15 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
               </svg>
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Active Users</p>
+              <p className="text-sm text-gray-500">Active Users</p>
               <p className="text-2xl font-bold text-blue-600">
                 {data.users.active}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center p-4 bg-gray-50 rounded-lg">
-            <div className="p-3 bg-gray-100 rounded-full mr-4">
+          <div className="flex items-center rounded-lg bg-gray-50 p-4">
+            <div className="mr-4 rounded-full bg-gray-100 p-3">
               <svg
                 className="w-6 h-6 text-gray-600"
                 fill="none"
@@ -279,15 +281,15 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
               </svg>
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Inactive Users</p>
+              <p className="text-sm text-gray-500">Inactive Users</p>
               <p className="text-2xl font-bold text-gray-600">
                 {data.users.inactive}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center p-4 bg-red-50 rounded-lg">
-            <div className="p-3 bg-red-100 rounded-full mr-4">
+          <div className="flex items-center rounded-lg bg-red-50 p-4">
+            <div className="mr-4 rounded-full bg-red-100 p-3">
               <svg
                 className="w-6 h-6 text-red-600"
                 fill="none"
@@ -303,7 +305,7 @@ const DashboardAnalysisHeader: React.FC<{ data: DashboardAnalysis }> = ({ data }
               </svg>
             </div>
             <div>
-              <p className="text-gray-500 text-sm">Blocked Users</p>
+              <p className="text-sm text-gray-500">Blocked Users</p>
               <p className="text-2xl font-bold text-red-600">
                 {data.users.blocked}
               </p>

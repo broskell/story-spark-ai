@@ -37,63 +37,56 @@ const DashboardLayout: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
-      <div className="px-4 py-3 bg-slate-800 border-b border-slate-700">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-gray-500">
-            {" "}
-            <Link to="/">
-              <button className="text-gray-500 text-xl cursor-pointer hover:text-gray-600 mr-4">
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-slate-900 text-gray-200 lg:h-screen lg:overflow-hidden">
+      <div className="border-b border-slate-700 bg-slate-800 px-4 py-3 sm:px-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="flex items-center gap-3 text-xl font-semibold text-gray-200 sm:text-2xl">
+            <Link to="/" className="shrink-0">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full text-gray-300 transition hover:bg-slate-700 hover:text-white">
                 <i className="fas fa-arrow-left"></i>
-              </button>
-            </Link>{" "}
-            {pageTitle}
+              </span>
+            </Link>
+            <span className="min-w-0 truncate">{pageTitle}</span>
           </h1>
-          <div className="flex items-center space-x-4">
-            <div className="hidden sm:ml-6 sm:flex sm:items-center">
-              <div className="ml-3 relative">
-                <div className="relative inline-flex">
-                  <button
-                    type="button"
-                    className="!rounded-button p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none"
-                  >
-                    <i className="fa-solid fa-bell"></i>
-                  </button>
-                  <span className="absolute top-0.5 right-0.5 grid min-h-[18px] min-w-[18px] translate-x-2/4 -translate-y-2/4 place-items-center rounded-full bg-red-700 text-xs text-white">
-                    {5}
-                  </span>
-                </div>
+          <div className="flex items-center justify-between gap-3 sm:justify-end">
+            <div className="hidden sm:flex sm:items-center sm:gap-4">
+              <div className="relative inline-flex">
+                <button
+                  type="button"
+                  className="!rounded-button rounded-full p-1 text-gray-400 transition hover:text-gray-200 focus:outline-none"
+                >
+                  <i className="fa-solid fa-bell"></i>
+                </button>
+                <span className="absolute right-0 top-0 grid min-h-[18px] min-w-[18px] translate-x-2/4 -translate-y-2/4 place-items-center rounded-full bg-red-700 text-xs text-white">
+                  {5}
+                </span>
               </div>
-              <div className="ml-3 relative">
-                <div>
-                  <button
-                    type="button"
-                    className="!rounded-button flex text-sm rounded-full focus:outline-none"
-                  >
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src="https://avatars.githubusercontent.com/u/76697055?v=4"
-                      alt="profile"
-                    />
-                  </button>
-                </div>
-              </div>
+              <button
+                type="button"
+                className="!rounded-button flex text-sm rounded-full focus:outline-none"
+              >
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="https://avatars.githubusercontent.com/u/76697055?v=4"
+                  alt="profile"
+                />
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 min-w-0 flex-col overflow-hidden lg:flex-row">
         <aside
-          className={`bg-slate-800 transition-all duration-300 ${
-            isSidebarCollapsed ? "w-20" : "w-64"
-          } flex flex-col border-r border-slate-700`}
+          className={`flex w-full shrink-0 flex-col border-r border-slate-700 bg-slate-800 transition-all duration-300 ${
+            isSidebarCollapsed ? "lg:w-20" : "lg:w-64"
+          }`}
         >
-          <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+          <nav className="flex-1 space-y-1 overflow-y-auto p-4">
             {accessibleMenuItems.map((item) => (
               <div key={item.name}>
                 <div
-                  className={`flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md cursor-pointer ${
+                  className={`flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-sm font-medium ${
                     location.pathname === item.path ||
                     location.pathname.startsWith(item.path + "/")
                       ? "bg-blue-500/30 text-gray-400"
@@ -114,12 +107,12 @@ const DashboardLayout: React.FC = () => {
                   )}
                 </div>
                 {item.subRoutes && expanded[item.name] && (
-                  <div className="ml-6 mt-1 space-y-1">
+                  <div className="ml-6 mt-1 space-y-1 pr-2">
                     {item.subRoutes.map((subItem) => (
                       <Link
                         key={subItem.name}
                         to={subItem.path}
-                        className={`flex items-center px-3 py-2 text-sm font-medium rounded-md ${
+                        className={`flex items-center rounded-md px-3 py-2 text-sm font-medium ${
                           location.pathname === subItem.path
                             ? "bg-blue-500/30 text-gray-400"
                             : "text-gray-400 hover:bg-blue-500/20"
@@ -134,10 +127,10 @@ const DashboardLayout: React.FC = () => {
               </div>
             ))}
           </nav>
-          <div className="p-4 bg-slate-800">
+          <div className="hidden bg-slate-800 p-4 lg:block">
             <button
               onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-              className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-300 bg-blue-500/30 hover:bg-blue-500/20 rounded-md"
+              className="flex w-full items-center justify-center rounded-md bg-blue-500/30 px-4 py-2 text-sm font-medium text-gray-300 hover:bg-blue-500/20"
             >
               <i
                 className={`fas ${
@@ -148,8 +141,8 @@ const DashboardLayout: React.FC = () => {
             </button>
           </div>
         </aside>
-        <div className="flex-1 overflow-auto">
-          <div className="p-4">
+        <div className="min-w-0 flex-1 overflow-auto">
+          <div className="p-4 sm:p-6">
             <Outlet />
           </div>
         </div>
