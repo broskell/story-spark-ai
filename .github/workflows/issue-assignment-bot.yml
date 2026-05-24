@@ -51,8 +51,8 @@ jobs:
             const postComment = text =>
               github.rest.issues.createComment({ owner, repo, issue_number: issueNumber, body: text });
 
-            // Contributor tiers: new → max 2 open | 5+ merged → max 1 | 10+ merged → no auto-assign
-            const MERGED_VETERAN = 5;
+            // Contributor tiers: 0–1 merged → max 2 open | 2–9 merged → max 1 | 10+ → no auto-assign
+            const MERGED_VETERAN = 2;
             const MERGED_BLOCKED = 10;
 
             const countMergedPRs = async username => {
@@ -290,8 +290,8 @@ jobs:
               return;
             }
 
-            // Contributor tiers: new → max 2 open | 5+ merged → max 1 | 10+ merged → no auto-assign
-            const MERGED_VETERAN = 5;
+            // Contributor tiers: 0–1 merged → max 2 open | 2–9 merged → max 1 | 10+ → no auto-assign
+            const MERGED_VETERAN = 2;
             const MERGED_BLOCKED = 10;
 
             const countMergedPRs = async username => {
