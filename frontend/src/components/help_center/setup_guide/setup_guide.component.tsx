@@ -80,6 +80,19 @@ const SetupGuide: FC<SetupGuideProps> = ({ steps }) => {
 
                 {/* Description */}
                 <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <li key={step.step} className="relative flex flex-col md:flex-row gap-4 md:gap-6">
+              <div
+                className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center text-indigo-600 dark:text-blue-400 font-bold z-10"
+                aria-hidden="true"
+              >
+                {step.step}
+              </div>
+
+              <div className="flex-1 bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-white/5 rounded-2xl p-6 shadow-sm hover:border-indigo-500/30 dark:hover:border-blue-500/30 hover:shadow-md hover:shadow-indigo-500/5 transition-all duration-300">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
                   {step.description}
                 </p>
 
@@ -106,6 +119,11 @@ const SetupGuide: FC<SetupGuideProps> = ({ steps }) => {
                       </code>
                     </pre>
                   </div>
+                  <pre className="bg-slate-950/90 dark:bg-slate-950/80 border border-slate-800 dark:border-white/5 rounded-xl p-4 overflow-x-auto text-xs md:text-sm font-mono text-emerald-400 dark:text-emerald-350">
+                    <code className="whitespace-pre">
+                      {step.code}
+                    </code>
+                  </pre>
                 )}
 
                 {/* Accent Line */}
