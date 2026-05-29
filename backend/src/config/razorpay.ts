@@ -1,5 +1,5 @@
 // Initializes and exports the Razorpay instance using credentials from environment variables
-import Razorpay from "razorpay";
+const Razorpay = require("razorpay");
 
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   throw new Error("Razorpay credentials are missing in environment variables");

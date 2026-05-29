@@ -9,6 +9,39 @@ import {
 
 import { loadRazorpayScript } from "../../../utils/loadRazorpay";
 
+interface RazorpayResponse {
+  razorpay_payment_id?: string;
+  razorpay_order_id?: string;
+  razorpay_signature?: string;
+}
+
+interface RazorpayFailureResponse {
+  error?: {
+    description?: string;
+  };
+}
+
+interface RazorpayOrderResponse {
+  success: boolean;
+  order: {
+    id: string;
+    amount: number;
+    currency: string;
+  };
+}
+
+interface RazorpayInstance {
+  open: () => void;
+  on: (
+    event: string,
+    callback: (response: RazorpayFailureResponse) => void
+  ) => void;
+}
+
+interface RazorpayWindow extends Window {
+  Razorpay: new (options: object) => RazorpayInstance;
+}
+
 const PaymentComponent = () => {
   // Read selected plan from pricing page
   const [searchParams] = useSearchParams();
@@ -38,7 +71,7 @@ const PaymentComponent = () => {
         }),
       });
 
-      const data = await res.json();
+      const data: RazorpayOrderResponse = await res.json();
 
       if (!data.success) {
         alert("Failed to create order.");
@@ -54,7 +87,7 @@ const PaymentComponent = () => {
         description: `${planName} Subscription`,
         order_id: data.order.id,
 
-        handler: async (response: any) => {
+        handler: async (response: RazorpayResponse) => {
           try {
             // Verify payment
             const verifyRes = await fetch("/api/v1/payment/verify", {
@@ -65,7 +98,8 @@ const PaymentComponent = () => {
               body: JSON.stringify(response),
             });
 
-            const verifyData = await verifyRes.json();
+            const verifyData: { success: boolean } =
+              await verifyRes.json();
 
             if (verifyData.success) {
               alert("Payment successful!");
@@ -89,12 +123,18 @@ const PaymentComponent = () => {
         },
       };
 
-      const paymentObject = new (window as any).Razorpay(options);
+      const paymentObject = new ((window as unknown) as RazorpayWindow).Razorpay(
+        options
+      );
 
-      paymentObject.on("payment.failed", function (response: any) {
-        console.error(response.error);
-        alert("Payment failed.");
-      });
+      paymentObject.on(
+        "payment.failed",
+        (response: RazorpayFailureResponse) => {
+          console.error(response.error);
+
+          alert(response.error?.description || "Payment failed.");
+        }
+      );
 
       paymentObject.open();
     } catch (error) {
