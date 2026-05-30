@@ -117,7 +117,7 @@ const LoginComponent = () => {
 
       <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="flex w-full max-w-md flex-col justify-center py-12 relative z-10">
+      <div className="relative z-10 flex w-full max-w-md min-w-0 flex-col justify-center py-12">
 
         <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
           <h2 className="text-center text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400 drop-shadow-sm">
@@ -125,7 +125,7 @@ const LoginComponent = () => {
           </h2>
         </div>
 
-        <div className="bg-slate-50 dark:bg-slate-800/60 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 sm:p-10 shadow-2xl">
+        <div className="w-full min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-8 shadow-2xl backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-800/60 sm:p-10">
 
             <button
             onClick={() => window.location.href = "/"}
@@ -139,7 +139,7 @@ const LoginComponent = () => {
           </h3>
 
           <form
-            className="space-y-5"
+            className="min-w-0 space-y-5"
             onSubmit={handleSubmit(onSubmit)}
           >
 
@@ -199,10 +199,11 @@ const LoginComponent = () => {
           </div>
 
           {/* Explicitly added list-none to prevent stray bullet point artifact on production build */}
-          <div className="mt-6 flex justify-center list-none">
+          <div className="mt-6 flex w-full max-w-full justify-center overflow-hidden list-none">
             <GoogleLogin
               onSuccess={handleGoogleLoginSuccess}
               onError={handleGoogleLoginError}
+              width="100%"
             />
           </div>
 
