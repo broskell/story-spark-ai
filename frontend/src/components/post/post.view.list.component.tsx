@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Post } from "../../models/post";
-
+import ImageFallback from "../ImageFallback";
+ImageFallback
 interface IExploreViewListComponentProps {
   posts: Post[];
   isLoading: boolean;
@@ -61,10 +62,10 @@ const ExploreViewListComponent: React.FC<IExploreViewListComponentProps> = ({
               className="cursor-pointer bg-gray-50 text-slate-900 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 overflow-hidden group flex flex-col h-full dark:bg-slate-900/50 dark:text-white dark:border-none"
             >
               <div className="relative overflow-hidden">
-                <img
-                  src={story.imageURL}
-                  alt={`Cover image for ${story.title}`}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                <ImageFallback
+                    src={story.imageURL}
+                    alt={`Cover image for ${story.title}`}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-100 to-transparent opacity-70 pointer-events-none dark:from-slate-900 dark:to-transparent dark:opacity-60"></div>

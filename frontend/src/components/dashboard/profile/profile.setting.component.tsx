@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { User } from "../../../models/user";
-
+import ImageFallback from "../../ImageFallback";
+ImageFallback
 interface ProfileSettingComponentProps {
   user: User;
   onSave: (updatedUser: Partial<User>) => void;
@@ -128,7 +129,7 @@ export const ProfileSettingComponent = ({ user, onSave, loading }: ProfileSettin
                     />
                     {formData.avatar && (
                       <div className="mt-2">
-                        <img
+                        <ImageFallback
                           src={formData.avatar}
                           alt="Profile preview"
                           className="h-16 w-16 rounded-full object-cover"

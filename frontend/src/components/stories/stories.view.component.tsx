@@ -10,11 +10,12 @@ import logo from "../../assets/logoNew.png";
 import StoryGeneratingAnimation from "../loading/story-generating-animation.component";
 import AudioPlayer, { type AudioPlayerHandle, type NarrationPlaybackState } from "../AudioPlayer";
 import { useLocation } from "react-router-dom";
-
+ImageFallback
 import {
   useGenerateAlternateEndingsMutation,
   useGenerateFreeAlternateEndingsMutation,
 } from "../../redux/apis/ai.model.api";
+import ImageFallback from "../ImageFallback";
 export interface IStories {
   uuid: string;
   title: string;
@@ -707,7 +708,7 @@ if (isLoading) {
                       } hover:scale-110 transition-transform duration-200 focus:outline-none`}
                       onClick={() => handelStorySelection(story)}
                     >
-                      <img
+                      <ImageFallback
                         src={story.imageURL}
                         alt={story.title}
                         className="w-full h-full object-cover rounded-full"
@@ -1025,7 +1026,7 @@ if (isLoading) {
           <div className="bg-slate-800/60 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden group">
             <div className="relative flex flex-col rounded-lg">
               <div className="relative m-3 overflow-hidden text-white rounded-xl">
-                <img
+                <ImageFallback
                   src={selectedStory.imageURL}
                   alt="card-image"
                   className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"

@@ -133,7 +133,7 @@ const getLatestPosts = async () => {
   try {
     const res = await Post.find({ isDeleted: { $ne: true } })
       .sort({ createdAt: -1 })
-      .limit(2)
+      .limit(3)
       .populate("author", "name email createdAt")
       .populate({
         path: "reactions",
@@ -156,7 +156,7 @@ const getFeaturedPosts = async () => {
       isDeleted: { $ne: true },
     })
       .sort({ createdAt: -1, updatedBy: -1 })
-      .limit(2)
+      .limit(3)
       .populate("author", "name email createdAt")
       .populate({
         path: "reactions",
@@ -202,13 +202,20 @@ const getSinglePost = async (id: string) => {
   return postById;
 };
 
-const getPostsByTag = async (tag: string, excludeId?: string) => {
+  const getPostsByTag = async (tag: string, excludeId?: string) => {
+
+  if (!tag) {
+    return [];
+  }
+
   const query: any = { tag, isDeleted: { $ne: true } };
+
   if (excludeId) {
     query._id = { $ne: excludeId };
   }
+
   const result = await Post.find(query)
-    .limit(2)
+    .limit(3)
     .populate("author", "name email createdAt")
     .populate({
       path: "reactions",

@@ -67,11 +67,11 @@
 //             </span>
 //           </button>
 
-//           <img
-//             className="h-9 w-9 rounded-full"
-//             src="https://avatars.githubusercontent.com/u/76697055?v=4"
-//             alt="profile"
-//           />
+//               <ImageFallback
+//               className="h-9 w-9 rounded-full"
+//               src="https://avatars.githubusercontent.com/u/76697055?v=4"
+//               alt="profile"
+//             />
 //         </div>
 //       </header>
 
@@ -175,7 +175,7 @@ import React, { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MenuItem, menuItems } from "./dashboard.utils";
 import { getUserInfo } from "../../services/auth.service";
-
+import ImageFallback from "../ImageFallback";
 const DashboardLayout: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
@@ -238,12 +238,11 @@ const DashboardLayout: React.FC = () => {
               5
             </span>
           </button>
-
-          <img
-            className="h-9 w-9 rounded-full"
-            src="https://avatars.githubusercontent.com/u/76697055?v=4"
-            alt="profile"
-          />
+              <ImageFallback
+                className="h-9 w-9 rounded-full"
+                src="https://avatars.githubusercontent.com/u/76697055?v=4"
+                alt="profile"
+              />
         </div>
       </header>
 

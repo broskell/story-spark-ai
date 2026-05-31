@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Globe, GitPullRequest, Users } from "lucide-react";
+import ImageFallback from "../ImageFallback";
 
 interface Contributor {
   login: string;
@@ -146,7 +147,7 @@ const ContributorsComponent = () => {
                 className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:border-blue-400/40 hover:bg-white/[0.08]"
               >
                 <div className="relative mb-5">
-                  <img
+                  <ImageFallback
                     src={contributor.avatar_url}
                     alt={contributor.login}
                     className="h-24 w-24 rounded-full border-4 border-blue-500/20 object-cover transition-all duration-300 group-hover:border-blue-400/50"

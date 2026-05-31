@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { isLoggedIn } from "../../../services/auth.service";
 import { useToggleFollowMutation } from "../../../redux/apis/user.api";
+import ImageFallback from "../../ImageFallback";
+ImageFallback
 
 const RecommendedWritersComponent = () => {
   const recommendedWriters = [
@@ -59,7 +61,7 @@ const RecommendedWritersComponent = () => {
           {recommendedWriters.map((writer, index) => (
             <div key={writer.id} className="flex items-center justify-between">
               <div className="flex items-center">
-                <img
+                <ImageFallback
                   className="h-10 w-10 rounded-full"
                   src={writer.image}
                   alt={writer.name}

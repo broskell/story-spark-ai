@@ -6,9 +6,10 @@ import SSProfile from "../../ui-component/ss-profile/ss-profile";
 import { useNavigate } from "react-router-dom";
 import BookmarkButton from "../../BookmarkButton";
 import React, { useState } from "react";
-
+ImageFallback
 import { FaLinkedin, FaEnvelope, FaLink } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import ImageFallback from "../../ImageFallback";
 
 const FeatureComponent = () => {
   const { data, isLoading, isError } = useGetFeaturedListsQuery(undefined);
@@ -37,15 +38,23 @@ const FeatureComponent = () => {
   }
 
   if (isError) {
-    return (
-      <div className="mb-12 text-slate-900 dark:text-slate-100">
-        <h2 className="text-2xl font-bold mb-6">Featured Posts</h2>
-        <div className="rounded-lg border border-red-200 dark:border-red-900/70 bg-red-50 dark:bg-red-900/20 px-4 py-5 text-red-700 dark:text-red-400">
-          Failed to load featured posts. Please try again later.
+      return (
+        <div className="mb-12 text-slate-900 dark:text-slate-100">
+          <h2 className="text-2xl font-bold mb-6">
+            Featured Posts
+          </h2>
+    
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className="animate-pulse rounded-xl bg-gray-200 dark:bg-slate-800 h-72"
+              ></div>
+            ))}
+          </div>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
   return (
     <div className="mb-12 text-slate-900 dark:text-slate-100">
@@ -65,7 +74,7 @@ const FeatureComponent = () => {
                 className="motion-card h-full bg-blue-500/10 rounded-lg shadow-sm overflow-hidden border border-slate-700/40 cursor-pointer hover:bg-blue-500/20 hover:border-blue-400/30 flex flex-col group"
               >
                 <div className="relative overflow-hidden h-48">
-                  <img
+                  <ImageFallback
                     className="motion-image h-full w-full object-cover"
                     src={post.imageURL}
                     alt={post.title || "Featured Post"}
@@ -198,9 +207,7 @@ const FeatureComponent = () => {
             );
           })
         ) : (
-          <div className="rounded-lg border border-slate-200 dark:border-slate-700/70 bg-slate-100 dark:bg-slate-900/40 px-4 py-5 text-slate-700 dark:text-slate-300">
-            Feature Post is not available!
-          </div>
+          <div className="animate-pulse rounded-xl bg-gray-200 dark:bg-slate-800 h-72 w-full"></div>
         )}
       </div>
     </div>

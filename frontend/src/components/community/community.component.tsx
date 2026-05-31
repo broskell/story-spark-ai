@@ -4,10 +4,10 @@ import GenreCard from './genre_card.component';
 import { isLoggedIn } from '../../services/auth.service';
 import { genres, featuredWriters, resources, stats } from './community.data';
 import GithubcontributorsComponent from './Githubcontributors.component';
-
+import ImageFallback from "../ImageFallback";
 const CommunityComponent: React.FC = () => {
   const isLogin = isLoggedIn();
- 
+
   return (
     <div className="min-h-screen bg-white text-slate-900 transition-colors duration-300 dark:bg-[#0b1329] dark:text-white">
       {/* Hero Section */}
@@ -86,11 +86,11 @@ const CommunityComponent: React.FC = () => {
               <div key={idx} className="flex flex-col items-center text-center group">
                 <div className="relative mb-6">
                   <div className="absolute inset-0 bg-blue-500 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                  <img 
-                    src={writer.avatar} 
-                    alt={writer.name} 
-                    className="w-24 h-24 rounded-full border-2 border-white/10 group-hover:border-blue-500 transition-colors relative z-10 object-cover" 
-                  />
+                    <ImageFallback
+                      src={writer.avatar}
+                      alt={writer.name}
+                      className="w-24 h-24 rounded-full border-2 border-white/10 group-hover:border-blue-500 transition-colors relative z-10 object-cover"
+                    />
                 </div>
                 <h3 className="text-xl font-bold mb-1 text-slate-900 dark:text-white">{writer.name}</h3>
                 <p className="text-blue-600 dark:text-blue-400 text-sm mb-4">{writer.role}</p>

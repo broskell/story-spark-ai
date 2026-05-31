@@ -1,7 +1,8 @@
 import React from "react";
 import { useGetReviewsQuery } from "../../../redux/apis/review.api";
 import { Review } from "../../../models/review";
-
+import ImageFallback from "../../ImageFallback";
+ImageFallback
 const WriterFeedbackComponent = () => {
   const { data: feedbackData = [], isLoading } =
     useGetReviewsQuery({});
@@ -34,7 +35,7 @@ const WriterFeedbackComponent = () => {
               className="bg-blue-500/10 p-6 rounded-xl transform transition-transform hover:scale-105"
             >
               <div className="flex items-center mb-4">
-                <img
+                <ImageFallback
                   className="h-12 w-12 rounded-full ring-4 ring-white"
                   src={writer.imgSrc}
                   alt={writer.name}
