@@ -35,18 +35,20 @@ const SSInput = <T extends FieldValues>({
 }: SSInputProps<T>) => {
   const [showPassword, setShowPassword] = useState(false);
 
-const inputType =
-  type === "password"
-    ? showPassword
-      ? "text"
-      : "password"
-    : type;
-    return (
+
+
+  const inputType =
+
+    type === "password" ? (showPassword ? "text" : "password") : type;
+
+
+
+  return (
     <div className="w-full min-w-0">
       <label htmlFor={name} className="block text-sm font-medium text-gray-600 dark:text-gray-400">
         {label}
       </label>
-     <div className="relative mt-2 w-full min-w-0 overflow-hidden rounded-full border-2 border-gray-800 dark:border-gray-600">
+      <div className="relative mt-2 w-full min-w-0">
         {icon && (
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
             <i className={icon}></i>
@@ -69,7 +71,6 @@ const inputType =
         <input
           type={inputType}
           id={name}
-           autoFocus={autoFocus}
           className={`w-full pl-8 pr-10 py-1.5 ttext-base text-gray-900 dark:text-gray-200 bg-white dark:bg-slate-800 border rounded-md sm:text-sm ${
           error
           ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500 dark:border-red-500"
@@ -92,10 +93,11 @@ const inputType =
 )}
       </div>
       {error && (
-        <p className="text-red-400 text-sm mt-1">
-        {error.message}
-        </p>
-    )}
+
+        <p className="text-red-400 text-sm mt-1">{error.message}</p>
+
+      )}
+
     </div>
   );
 };
