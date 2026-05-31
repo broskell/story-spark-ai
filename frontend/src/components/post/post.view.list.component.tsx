@@ -86,7 +86,7 @@ const ExploreViewListComponent: React.FC<IExploreViewListComponentProps> = ({
                     src={story.imageURL}
                     alt={`Cover image for ${story.title}`}
                     onError={() => handleImageError(story._id)}
-                    className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out text-transparent"
                   />
                 ) : (
                   <div className="w-full h-52 bg-gradient-to-br from-indigo-500/25 via-purple-500/25 to-blue-500/25 flex items-center justify-center relative">
@@ -105,12 +105,12 @@ const ExploreViewListComponent: React.FC<IExploreViewListComponentProps> = ({
                   />
                 </div>
 
-                <div className="absolute top-4 left-4 flex gap-2">
-                  <span className="px-3 py-1 bg-indigo-600 border border-indigo-500/50 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
+                <div className="absolute top-4 left-4 flex gap-2 max-w-[calc(100%-3rem)]">
+                  <span className="inline-block max-w-[130px] truncate px-3 py-1 bg-indigo-600 border border-indigo-500/50 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
                     {story.tag}
                   </span>
                   {story.language && (
-                    <span className="px-3 py-1 bg-purple-600 border border-purple-500/50 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
+                    <span className="inline-block shrink-0 px-3 py-1 bg-purple-600 border border-purple-500/50 text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg">
                       {story.language}
                     </span>
                   )}
