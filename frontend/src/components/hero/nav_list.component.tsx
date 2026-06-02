@@ -33,7 +33,11 @@ const NavListComponent = () => {
           ) : (
             <Link to="/login" className="rounded-md px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Login</Link>
           )}
-          <button className="rounded-md px-2 py-1 text-slate-700 lg:hidden dark:text-slate-200" onClick={() => setMenuOpen((v) => !v)}>
+          <button 
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+            className="rounded-md px-2 py-1 text-slate-700 lg:hidden dark:text-slate-200" 
+            onClick={() => setMenuOpen((v) => !v)}>
             <i className="fa-solid fa-bars" />
           </button>
         </div>

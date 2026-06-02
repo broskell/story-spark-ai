@@ -21,7 +21,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       {!hideHeader && <NavListComponent />}
 
       <CookieConsentBanner />
-      <div className="flex-grow min-h-0">{children}</div>
+      <main className="flex-grow min-h-0">{children}</main>
       {!hideFooter && <FooterComponent />}
       <ChatComponent />
     </div>

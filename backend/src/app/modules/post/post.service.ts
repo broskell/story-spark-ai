@@ -313,8 +313,6 @@ const toggleBookmark = async (postId: string, token: ITokenPayload) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "User not found!");
   }
 
-  const postExists = await Post.exists({ _id: postId, isDeleted: { $ne: true } });
-  if (!postExists) {
   const post = await Post.findOne({ _id: postId, isDeleted: { $ne: true } });
 
   if (!post) {
@@ -500,9 +498,6 @@ export const PostService = {
   deletePost,
   remixStory,       // Exposed service for AI story variations
   translateStory,   // Exposed service for localized modifications
-};
-  remixStory,
-  translateStory,
   getGenres,
 };
 
