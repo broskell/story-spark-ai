@@ -52,14 +52,14 @@ const FooterComponent = () => {
   const githubIssuesUrl =
     import.meta.env.VITE_GITHUB_REPO_ISSUES_URL || DEFAULT_GITHUB_ISSUES_URL;
 
-  const resourceLinks = [
-    { label: "Blog",         to: "/blog"        },
-    { label: "Help Center",  to: "/help-center"    },
-    // ─── FIXED: Changed from "/community" to match the secure dashboard sub-route ───
-    { label: "Community",    to: "/dashboard/community" },
-    { label: "Contributors", to: "/contributors"},
+  const resourceLinks: Array<{ label: string; to: string; requiresAuth?: boolean }> = [
+    { label: "Blog",              to: "/blog"        },
+    { label: "Help Center",       to: "/help-center"    },
+    // Community is a protected route — requiresAuth signals the lock icon for logged-out visitors
+    { label: "Community",         to: "/community", requiresAuth: true },
+    { label: "Contributors",      to: "/contributors"},
     { label: "Support / Feedback", to: "/contact-us" },
-    { label: "GitHub Issues", to: githubIssuesUrl },
+    { label: "GitHub Issues",     to: githubIssuesUrl },
   ];
 
   const legalLinks = [
@@ -158,16 +158,30 @@ const FooterComponent = () => {
           <div className="col-span-6 sm:col-span-4 lg:col-span-2 flex flex-col gap-4">
             <h3 className="text-[11.5px] font-bold tracking-[0.22em] uppercase text-white/70">Resources</h3>
             <ul className="flex flex-col gap-[12.5px]">
-              {resourceLinks.map(({ label, to }) => (
+              {resourceLinks.map(({ label, to, requiresAuth }) => (
                 <li key={to}>
                   {to && to.startsWith("http") ? (
-                    <a href={to} target="_blank" rel="noopener noreferrer" className="group relative inline-flex text-[14px] leading-none text-slate-300/85 transition-colors duration-200 hover:text-blue-300">
+                    <a href={to} target="_blank" rel="noopener noreferrer" className="group relative inline-flex items-center gap-1.5 text-[14px] leading-none text-slate-300/85 transition-colors duration-200 hover:text-blue-300">
                       {label}
                       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-blue-400/40 transition-all duration-300 ease-out group-hover:w-full" />
                     </a>
                   ) : (
-                    <Link to={to} className="group relative inline-flex text-[14px] leading-none text-slate-300/85 transition-colors duration-200 hover:text-blue-300">
+                    <Link
+                      to={to}
+                      title={requiresAuth ? "Login required to access this page" : undefined}
+                      className="group relative inline-flex items-center gap-1.5 text-[14px] leading-none text-slate-300/85 transition-colors duration-200 hover:text-blue-300"
+                    >
                       {label}
+                      {/* Lock badge — indicates login is required for this link */}
+                      {requiresAuth && (
+                        <span
+                          aria-label="Login required"
+                          title="Login required"
+                          className="inline-flex items-center justify-center rounded-full border border-blue-500/30 bg-blue-600/10 px-1.5 py-0.5 text-[9px] font-semibold leading-none text-blue-400 tracking-wide"
+                        >
+                          🔒 Login
+                        </span>
+                      )}
                       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-blue-400/40 transition-all duration-300 ease-out group-hover:w-full" />
                     </Link>
                   )}

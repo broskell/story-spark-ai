@@ -63,13 +63,23 @@ import WritingAssistantComponent from "./components/writing-assistant/writing_as
 type ProtectedRouteProps = {
   allowedRoles: string[];
   element?: React.ReactElement;
+  loginMessage?: string;
 };
 
-const ProtectedRoute = ({ allowedRoles, element }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ allowedRoles, element, loginMessage }: ProtectedRouteProps) => {
   const user = getUserInfo();
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{
+          loginMessage:
+            loginMessage ?? "Please log in to access this page.",
+        }}
+      />
+    );
   }
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />;
@@ -118,11 +128,25 @@ const router = createBrowserRouter([
 
       // Protected routes (logged-in users)
       {
-        element: <ProtectedRoute allowedRoles={ALL_ROLES} />,
+        element: (
+          <ProtectedRoute
+            allowedRoles={ALL_ROLES}
+            loginMessage="Please log in to access this page."
+          />
+        ),
         children: [
           { path: "explore", element: <ExploreComponent /> },
           { path: "bookmarks", element: <BookmarksComponent /> },
-          { path: "community", element: <CommunityComponent /> },
+          {
+            path: "community",
+            element: (
+              <ProtectedRoute
+                allowedRoles={ALL_ROLES}
+                loginMessage="Please log in to access the Community."
+              />
+            ),
+            children: [{ index: true, element: <CommunityComponent /> }],
+          },
           { path: "resources", element: <ResourcesListComponent /> },
           { path: "resources/:resourceName", element: <ResourceDetailComponent /> },
         ],
