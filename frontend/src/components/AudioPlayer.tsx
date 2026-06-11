@@ -110,6 +110,11 @@ const AudioPlayer = forwardRef<AudioPlayerHandle, AudioPlayerProps>(
 
     const isLoading = speech.isSupported && !speech.isReady;
     const canNarrate = speech.isSupported && speech.isReady && text.trim().length > 0;
+    const playbackState: NarrationPlaybackState = speech.isPaused
+      ? "paused"
+      : speech.isPlaying
+        ? "playing"
+        : "idle";
     const spokenWordCount =
       speech.progress.totalWords === 0
         ? 0
@@ -174,58 +179,81 @@ const AudioPlayer = forwardRef<AudioPlayerHandle, AudioPlayerProps>(
           </div>
         ) : (
           <div className="mt-4 space-y-4">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-4">
-              <button
-                type="button"
-                role="button"
-                aria-label="Play narration from the beginning"
-                title="Play from the beginning"
-                onClick={() => speech.play()}
-                disabled={!canNarrate}
-                className={`${controlButtonBaseClass} border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-200 dark:hover:bg-indigo-500/20`}
-              >
-                <Play className="h-4 w-4" aria-hidden="true" />
-                Play
-              </button>
+            <div className="flex flex-wrap gap-3">
+              {playbackState === "idle" ? (
+                <button
+                  type="button"
+                  role="button"
+                  aria-label="Play narration from the beginning"
+                  title="Play from the beginning"
+                  onClick={() => speech.play()}
+                  disabled={!canNarrate}
+                  className={`${controlButtonBaseClass} border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-200 dark:hover:bg-indigo-500/20`}
+                >
+                  <Play className="h-4 w-4" aria-hidden="true" />
+                  Play
+                </button>
+              ) : null}
 
-              <button
-                type="button"
-                role="button"
-                aria-label="Pause narration"
-                title="Pause"
-                onClick={speech.pause}
-                disabled={!speech.isPlaying}
-                className={`${controlButtonBaseClass} border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700`}
-              >
-                <Pause className="h-4 w-4" aria-hidden="true" />
-                Pause
-              </button>
+              {playbackState === "playing" ? (
+                <>
+                  <button
+                    type="button"
+                    role="button"
+                    aria-label="Pause narration"
+                    title="Pause"
+                    onClick={speech.pause}
+                    disabled={!speech.isPlaying}
+                    className={`${controlButtonBaseClass} border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700`}
+                  >
+                    <Pause className="h-4 w-4" aria-hidden="true" />
+                    Pause
+                  </button>
 
-              <button
-                type="button"
-                role="button"
-                aria-label="Resume narration"
-                title="Resume"
-                onClick={speech.resume}
-                disabled={!speech.isPaused}
-                className={`${controlButtonBaseClass} border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200 dark:hover:bg-emerald-500/20`}
-              >
-                <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                Resume
-              </button>
+                  <button
+                    type="button"
+                    role="button"
+                    aria-label="Stop narration and reset to the beginning"
+                    title="Stop"
+                    onClick={speech.stop}
+                    disabled={!speech.isPlaying && !speech.isPaused}
+                    className={`${controlButtonBaseClass} border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-200 dark:hover:bg-rose-500/20`}
+                  >
+                    <Square className="h-4 w-4" aria-hidden="true" />
+                    Stop
+                  </button>
+                </>
+              ) : null}
 
-              <button
-                type="button"
-                role="button"
-                aria-label="Stop narration and reset to the beginning"
-                title="Stop"
-                onClick={speech.stop}
-                disabled={!speech.isPlaying && !speech.isPaused}
-                className={`${controlButtonBaseClass} border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-200 dark:hover:bg-rose-500/20`}
-              >
-                <Square className="h-4 w-4" aria-hidden="true" />
-                Stop
-              </button>
+              {playbackState === "paused" ? (
+                <>
+                  <button
+                    type="button"
+                    role="button"
+                    aria-label="Resume narration"
+                    title="Resume"
+                    onClick={speech.resume}
+                    disabled={!speech.isPaused}
+                    className={`${controlButtonBaseClass} border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200 dark:hover:bg-emerald-500/20`}
+                  >
+                    <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                    Resume
+                  </button>
+
+                  <button
+                    type="button"
+                    role="button"
+                    aria-label="Stop narration and reset to the beginning"
+                    title="Stop"
+                    onClick={speech.stop}
+                    disabled={!speech.isPlaying && !speech.isPaused}
+                    className={`${controlButtonBaseClass} border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-200 dark:hover:bg-rose-500/20`}
+                  >
+                    <Square className="h-4 w-4" aria-hidden="true" />
+                    Stop
+                  </button>
+                </>
+              ) : null}
             </div>
             <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(140px,160px)_minmax(160px,1fr)_minmax(160px,1fr)_minmax(200px,1fr)] lg:items-end">
               <div className="space-y-2">
