@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../theme/theme.context";
 
@@ -37,7 +37,12 @@ const saveCookiePreferences = (preferences: CookiePreferences) => {
   updateAppCookieState(preferences);
 };
 
-const CookieConsentBanner: FC = () => {
+type CookieConsentBannerProps = {
+  onLayoutChange?: (height: number) => void;
+};
+
+const CookieConsentBanner: FC<CookieConsentBannerProps> = ({ onLayoutChange }) => {
+  const bannerRef = useRef<HTMLDivElement>(null);
   const [preferences, setPreferences] = useState<CookiePreferences | null>(null);
   const [showBanner, setShowBanner] = useState(false);
   const { isDark } = useTheme();
@@ -47,6 +52,31 @@ const CookieConsentBanner: FC = () => {
     setPreferences(storedPreferences);
     setShowBanner(!storedPreferences.saved);
   }, []);
+
+  useEffect(() => {
+    if (!showBanner) {
+      onLayoutChange?.(0);
+      return;
+    }
+
+    const updateLayout = () => {
+      const banner = bannerRef.current;
+      if (!banner) return;
+      onLayoutChange?.(banner.getBoundingClientRect().height);
+    };
+
+    updateLayout();
+    const observer = new ResizeObserver(updateLayout);
+    if (bannerRef.current) {
+      observer.observe(bannerRef.current);
+    }
+    window.addEventListener("resize", updateLayout);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateLayout);
+    };
+  }, [onLayoutChange, showBanner]);
 
   if (!preferences || !showBanner) {
     return null;
@@ -99,7 +129,7 @@ const CookieConsentBanner: FC = () => {
     : "w-full rounded-xl border border-slate-200 bg-white px-5 py-3 text-xs font-bold text-slate-900 transition-all duration-150 hover:bg-slate-100 active:scale-[0.98] cursor-pointer text-center uppercase tracking-wider";
 
   return (
-    <div className={bannerClasses}>
+    <div ref={bannerRef} className={bannerClasses}>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:px-6 lg:px-8 xl:flex-row xl:items-start xl:justify-between xl:gap-8">
         <div className="max-w-3xl space-y-4">
           <div className="space-y-1.5">

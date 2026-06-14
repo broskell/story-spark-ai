@@ -5,124 +5,345 @@ const plans = [
     title: "Free",
     price: "$0",
     duration: "/month",
+    description: "Perfect for getting started with AI-powered storytelling.",
     features: [
-      "✓ 5 stories per month",
-      "✓ Basic AI model access",
-      "✓ Standard community support",
-      "✓ Export to Plain Text",
+      "Basic AI writing assistance",
+      "5 stories per month",
+      "Standard templates",
+      "Community access",
     ],
     linkTo: "/signup",
-    buttonLabel: "Get Started",
+    buttonLabel: "Get Started Free",
+    popular: false,
+    accent: "rgba(96,165,250,0.18)",
+    borderColor: "rgba(148,163,184,0.18)",
+    buttonStyle: {
+      background: "linear-gradient(135deg, rgba(96,165,250,0.18), rgba(99,102,241,0.18))",
+      border: "1px solid rgba(96,165,250,0.35)",
+      color: "#93c5fd",
+    } as React.CSSProperties,
   },
   {
     title: "Pro",
     price: "$19",
     duration: "/month",
+    description: "Unlock your full creative potential with unlimited access.",
     features: [
-      "✓ Unlimited story generation",
-      "✓ Advanced AI models (GPT-4 / Claude 3)",
-      "✓ Priority email support",
-      "✓ Advanced Markdown & PDF exports",
-      "✓ Commercial usage rights",
+      "Unlimited AI stories",
+      "Priority AI processing",
+      "Advanced story templates",
+      "Priority support",
+      "Analytics dashboard",
+      "Export in all formats",
     ],
     linkTo: "/payment?plan=Pro&price=19",
     buttonLabel: "Start Pro Trial",
+    popular: true,
+    accent: "rgba(56,189,248,0.22)",
+    borderColor: "rgba(56,189,248,0.45)",
+    buttonStyle: {
+      background: "linear-gradient(135deg, #0ea5e9, #6366f1)",
+      border: "none",
+      color: "#ffffff",
+      boxShadow: "0 8px 32px rgba(14,165,233,0.35)",
+    } as React.CSSProperties,
   },
   {
     title: "Enterprise",
     price: "$49",
     duration: "/month",
+    description: "Built for teams that need collaboration and full API access.",
     features: [
-      "✓ Everything in Pro",
-      "✓ Real-time team collaboration",
-      "✓ Dedicated account manager",
-      "✓ Full API access",
-      "✓ Custom model fine-tuning",
+      "Everything in Pro",
+      "Team collaboration tools",
+      "Full API access",
+      "Custom integrations",
+      "Dedicated account manager",
     ],
     linkTo: "/contact-us",
     buttonLabel: "Contact Sales",
+    popular: false,
+    accent: "rgba(168,85,247,0.18)",
+    borderColor: "rgba(148,163,184,0.18)",
+    buttonStyle: {
+      background: "linear-gradient(135deg, rgba(168,85,247,0.18), rgba(236,72,153,0.18))",
+      border: "1px solid rgba(168,85,247,0.35)",
+      color: "#d8b4fe",
+    } as React.CSSProperties,
   },
 ];
 
+const CheckIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    style={{ flexShrink: 0, marginTop: "2px" }}
+  >
+    <circle cx="8" cy="8" r="8" fill="rgba(56,189,248,0.15)" />
+    <path
+      d="M5 8l2.5 2.5L11 5.5"
+      stroke="#38bdf8"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const PricingComponent = () => {
   const navigate = useNavigate();
-  return (
-    <section id="pricing-section" className="w-full box-border py-12 sm:py-16 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 relative overflow-hidden">
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-600/5 rounded-full blur-[120px] pointer-events-none select-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-600/5 rounded-full blur-[120px] pointer-events-none select-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full box-border relative z-10">
-        <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16 px-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/10 dark:border-white/10 bg-blue-500/5 text-blue-600 dark:text-blue-400 mb-4 select-none shadow-sm dark:shadow-none">
-            <i className="fa-solid fa-credit-card text-xs"></i>
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">Flexible Tiers</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+  return (
+    <section
+      id="pricing-section"
+      style={{
+        paddingBlock: "clamp(3rem, 7vw, 5.5rem)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Background glows */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: "-20%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "700px",
+          height: "400px",
+          borderRadius: "9999px",
+          background: "radial-gradient(ellipse, rgba(56,189,248,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+          filter: "blur(40px)",
+        }}
+      />
+
+      <div className="story-page-shell">
+        {/* Heading */}
+        <div style={{ maxWidth: "560px", margin: "0 auto 3rem", textAlign: "center" }}>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              borderRadius: "9999px",
+              border: "1px solid rgba(56,189,248,0.25)",
+              background: "rgba(56,189,248,0.08)",
+              color: "#38bdf8",
+              fontSize: "11px",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              padding: "4px 14px",
+              marginBottom: "16px",
+            }}
+          >
+            Pricing
+          </span>
+          <h2 className="story-section-heading" style={{ marginBottom: "12px" }}>
             Simple, Transparent Pricing
           </h2>
-          <p className="mt-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium max-w-md mx-auto leading-relaxed">
-            Choose the operational workspace tier tailored perfectly to match your creative pipeline volume requirements.
+          <p className="story-section-copy">
+            Choose the plan that fits your creative journey. Upgrade or cancel anytime.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 sm:px-0 w-full box-border items-stretch">
+        {/* Cards grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "1.5rem",
+            alignItems: "start",
+          }}
+        >
           {plans.map((plan) => (
-            <div 
-              key={plan.title} 
-              className={`relative overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8 border transition-all duration-300 flex flex-col justify-between w-full box-border group hover:shadow-xl ${
-                plan.highlight 
-                  ? "bg-white dark:bg-[#111827]/60 border-blue-500/40 dark:border-blue-500/40 shadow-md md:scale-[1.03]" 
-                  : "bg-white dark:bg-[#111827]/30 border-slate-200 dark:border-white/10 shadow-sm hover:border-slate-300 dark:hover:border-white/20"
-              }`}
+            <div
+              key={plan.title}
+              className="motion-card"
+              style={{
+                position: "relative",
+                borderRadius: "20px",
+                border: `1px solid ${plan.borderColor}`,
+                background: plan.popular
+                  ? "linear-gradient(160deg, rgba(15,23,42,0.92) 0%, rgba(12,36,60,0.88) 100%)"
+                  : "linear-gradient(180deg, rgba(15,23,42,0.82) 0%, rgba(15,23,42,0.58) 100%)",
+                boxShadow: plan.popular
+                  ? "0 0 0 1px rgba(56,189,248,0.45), 0 24px 64px rgba(2,6,23,0.4), 0 0 60px rgba(56,189,248,0.08)"
+                  : "0 20px 55px rgba(2,6,23,0.24)",
+                padding: "2rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0",
+              }}
             >
-              {plan.highlight && (
-                <div className="absolute top-0 right-0 rounded-bl-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-white select-none">
-                  Popular
+              {/* Popular badge */}
+              {plan.popular && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-13px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(135deg, #0ea5e9, #6366f1)",
+                    color: "#ffffff",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    padding: "4px 18px",
+                    borderRadius: "9999px",
+                    boxShadow: "0 4px 18px rgba(14,165,233,0.45)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  ✦ Most Popular
                 </div>
               )}
 
-              <div className="w-full box-border">
-                <h3 className="mb-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {plan.title}
-                </h3>
-                
-                <div className="mb-6 flex items-baseline select-none">
-                  <span className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
-                    {plan.price}
-                  </span>
-                  <span className="ml-1 text-xs sm:text-sm font-medium text-slate-400 dark:text-slate-500">
-                    {plan.duration}
-                  </span>
-                </div>
+              {/* Accent glow behind card top */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: "120px",
+                  borderRadius: "20px 20px 0 0",
+                  background: `radial-gradient(ellipse at 50% 0%, ${plan.accent}, transparent 70%)`,
+                  pointerEvents: "none",
+                }}
+              />
 
-                <div className="h-px bg-slate-100 dark:bg-white/5 w-full mb-6" />
+              {/* Plan title */}
+              <h3
+                style={{
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  color: plan.popular ? "#38bdf8" : "#94a3b8",
+                  marginBottom: "12px",
+                }}
+              >
+                {plan.title}
+              </h3>
 
-                <ul className="mb-8 list-none p-0 m-0 space-y-3.5">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-                      <div className="flex items-center justify-center h-5 w-5 shrink-0 select-none mt-0.5">
-                        <i className={`fa-solid fa-circle-check text-xs ${plan.highlight ? "text-blue-500 dark:text-blue-400" : "text-slate-400 dark:text-slate-600"}`} />
-                      </div>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Price */}
+              <div style={{ marginBottom: "12px", display: "flex", alignItems: "flex-end", gap: "4px" }}>
+                <span
+                  style={{
+                    fontSize: "clamp(2.5rem, 5vw, 3rem)",
+                    fontWeight: 800,
+                    lineHeight: 1,
+                    color: "#f8fafc",
+                    letterSpacing: "-0.02em",
+                    fontFamily: "'Space Grotesk', sans-serif",
+                  }}
+                >
+                  {plan.price}
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "#64748b",
+                    fontWeight: 500,
+                    marginBottom: "6px",
+                  }}
+                >
+                  {plan.duration}
+                </span>
               </div>
 
-              <button 
-                type="button"
+              {/* Description */}
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#94a3b8",
+                  lineHeight: 1.6,
+                  marginBottom: "1.5rem",
+                  minHeight: "42px",
+                }}
+              >
+                {plan.description}
+              </p>
+
+              {/* Divider */}
+              <div
+                style={{
+                  height: "1px",
+                  background: "rgba(148,163,184,0.12)",
+                  marginBottom: "1.5rem",
+                }}
+              />
+
+              {/* Features */}
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  marginBottom: "2rem",
+                  flex: 1,
+                }}
+              >
+                {plan.features.map((feature) => (
+                  <li
+                    key={feature}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "10px",
+                      fontSize: "0.875rem",
+                      color: "#cbd5e1",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <CheckIcon />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA Button */}
+              <button
+                className="motion-cta"
                 onClick={() => navigate(plan.linkTo)}
-                className={`w-full py-3 px-4 rounded-xl text-xs font-bold transition-all duration-150 active:scale-[0.98] cursor-pointer select-none uppercase tracking-wider ${
-                  plan.highlight
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md shadow-blue-500/10"
-                    : "bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5"
-                }`}
+                style={{
+                  width: "100%",
+                  padding: "14px 20px",
+                  borderRadius: "12px",
+                  fontSize: "0.9375rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  letterSpacing: "0.01em",
+                  ...plan.buttonStyle,
+                }}
               >
                 {plan.buttonLabel}
               </button>
             </div>
           ))}
         </div>
+
+        {/* Bottom note */}
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "2.5rem",
+            fontSize: "0.8125rem",
+            color: "#475569",
+          }}
+        >
+          All plans include a 14-day money-back guarantee. No credit card required for Free.
+        </p>
       </div>
     </section>
   );
