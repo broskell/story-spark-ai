@@ -26,22 +26,12 @@ if (!container) {
 
 createRoot(container).render(
   <StrictMode>
-    <HelmetProvider>
-      {GOOGLE_CLIENT_ID ? (
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <Provider store={store}>
-            <ThemeProvider>
-              <App />
-            </ThemeProvider>
-          </Provider>
-        </GoogleOAuthProvider>
-      ) : (
-        <Provider store={store}>
-          <ThemeProvider>
-            <App />
-          </ThemeProvider>
-        </Provider>
-      )}
-    </HelmetProvider>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID || "dummy-client-id"}>
+      <Provider store={store}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </Provider>
+    </GoogleOAuthProvider>
   </StrictMode>
 );
