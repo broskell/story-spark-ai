@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { useGetPostListsQuery, useGetGenresQuery } from "../../redux/apis/post.api";
 import type { Post } from "../../models/post";
 import { useDebounced } from "../../hooks/global";
-import PaginationComponent from "../pagination/pagination.component";
+
 
 export const ExploreComponent = () => {
   const [sortBy, setSortBy] = useState<string>("createdAt");
   const [sortOrder, setSortOrder] = useState<string>("desc");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [size, setSize] = useState<number>(10);
+  const size = 12;
   const [page, setPage] = useState<number>(1);
   const [featuredPost, setFeaturedPost] = useState<boolean>(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -49,9 +49,10 @@ export const ExploreComponent = () => {
     setPage(1);
   };
 
-  const onPaginationChange = (page: number, pageSize: number) => {
-    setPage(page);
-    setSize(pageSize);
+  const loadMore = () => {
+    if (data?.meta && filteredPosts.length < data.meta.total) {
+      setPage((prev) => prev + 1);
+    }
   };
 
   const handleTagClick = (tag: string) => {
@@ -243,19 +244,7 @@ export const ExploreComponent = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <select
-                    className="!rounded-button border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-gray-100 text-slate-900 py-1.5 px-3 outline-none transition-all appearance-none cursor-pointer dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300"
-                    value={size}
-                    onChange={(e) => {
-                      setSize(Number(e.target.value));
-                      setPage(1);
-                    }}
-                  >
-                    <option value={10}>10</option>
-                    <option value={25}>25</option>
-                    <option value={50}>50</option>
-                    <option value={100}>100</option>
-                  </select>
+                  {/* Entries dropdown removed for infinite scroll */}
                 </div>
               </div>
 
@@ -349,17 +338,21 @@ export const ExploreComponent = () => {
               )}
             </div>
 
-            {!featuredPost && data?.meta && (
-
-              <div className="sticky bottom-0 bg-white/90 backdrop-blur-xl border-t border-gray-200 z-20 mt-8 shadow-[0_-10px_40px_-10px_rgba(15,23,42,0.12)] transition-colors duration-300 dark:bg-[#0b1329]/80 dark:border-slate-800 dark:shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.5)]">
-                <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-                  <PaginationComponent
-                    current={page}
-                    pageSize={size}
-                    total={data.meta.total}
-                    onChange={onPaginationChange}
-                  />
-                </div>
+            {!featuredPost && data?.meta && filteredPosts.length > 0 && filteredPosts.length < data.meta.total && (
+              <div className="flex justify-center mt-8 mb-8 z-20 relative">
+                <button
+                  onClick={loadMore}
+                  disabled={isLoading}
+                  className="cursor-pointer !rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 shadow-lg shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <span className="flex items-center gap-2">
+                      <i className="fas fa-spinner fa-spin"></i> Loading...
+                    </span>
+                  ) : (
+                    "Load More"
+                  )}
+                </button>
               </div>
             )}
           </div>
