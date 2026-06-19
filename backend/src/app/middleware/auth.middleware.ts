@@ -14,6 +14,7 @@ type JwtVerifiedUser = {
   role?: string;
 };
 
+
 const extractBearerToken = (authHeader: string): string => {
   if (!authHeader) return "";
   if (!authHeader.startsWith("Bearer ")) return "";
@@ -52,6 +53,18 @@ const auth = (...requiredRole: string[]) =>
         config.jwt.secret as Secret
       ) as unknown as JwtVerifiedUser;
 
+        // Support both header-based and cookie-based tokens.
+        // Logout() blacklists whatever token string it receives (header or cookie),
+        // so auth middleware must check the same token string source.
+        const bearerToken = authHeader.startsWith("Bearer ")
+          ? authHeader.slice(7).trim()
+          : authHeader.trim();
+
+        const cookieToken = (req as any).cookies?.accessToken || (req as any).cookies?.token;
+
+        const token = bearerToken || cookieToken || "";
+ main
+
       if (!verified?._id) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "User not found");
       }
@@ -63,7 +76,19 @@ const auth = (...requiredRole: string[]) =>
           httpStatus.UNAUTHORIZED,
           "Token has been revoked. Please log in again."
         );
+
       }
+
+
+        const isBlacklisted = await TokenBlacklist.findOne({ token });
+
+        if (isBlacklisted) {
+          throw new ApiError(
+            httpStatus.UNAUTHORIZED,
+            "Token has been revoked. Please log in again."
+          );
+        }
+main
 
       const user = await User.findById(verified._id);
       if (!user) {

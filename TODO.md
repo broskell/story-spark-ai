@@ -1,5 +1,6 @@
 # TODO - Fix #3556 / PR #3559
 
+
 ## Authentication middleware (fix CodeQL + validation)
 - [ ] Inspect and replace backend/src/app/middleware/auth.middleware.ts with hardened auth flow
 - [ ] Fix Authorization header parsing (Bearer only, reject malformed)
@@ -10,6 +11,14 @@
 - [ ] Enforce tokenVersion validation only when present
 - [ ] Verify role authorization logic (requiredRole behavior)
 - [ ] Fix any type issues inside middleware
+
+- [x] Inspect existing Trending Topics implementation in `frontend/src/components/home/trending_topic/trending_topic.component.tsx`.
+- [x] Replace previous `topicsData` chip layout with a new `trendingTopics` array containing 8 topics.
+- [x] Implement responsive grid (2/3/4 columns) with Tailwind hover + transition effects.
+- [x] Ensure dark mode support via `dark:` classes.
+- [ ] Verify there are no build/runtime errors (run frontend typecheck/build or dev check).
+- [ ] Run quick manual UI verification on homepage.
+main
 
 ## Type check / build hygiene
 - [ ] Fix TypeScript compile errors introduced elsewhere (notably enhance_prompt.utils.ts)
