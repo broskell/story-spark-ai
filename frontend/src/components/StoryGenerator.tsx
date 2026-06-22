@@ -15,8 +15,20 @@ export const StoryGenerator: React.FC<StoryGeneratorProps> = ({ onStoryGenerated
 
   const handleGenerate = async () => {
     // Don't generate if no prompt
-    if (!prompt.trim()) {
+    const trimmedPrompt = prompt.trim();
+
+    if (!trimmedPrompt) {
       setError('Please enter a story prompt.');
+      return;
+    }
+
+    if (trimmedPrompt.length < 10) {
+      setError('Prompt must be at least 10 characters long.');
+      return;
+    }
+
+    if (trimmedPrompt.length > 1000) {
+      setError('Prompt cannot exceed 1000 characters.');
       return;
     }
 
@@ -26,7 +38,7 @@ export const StoryGenerator: React.FC<StoryGeneratorProps> = ({ onStoryGenerated
 
     try {
       const response = await api.post('/ai/generate', {
-        prompt: prompt.trim(),
+        prompt: trimmedPrompt,
         variations: variationCount,
       });
 
@@ -92,13 +104,21 @@ export const StoryGenerator: React.FC<StoryGeneratorProps> = ({ onStoryGenerated
         </label>
         <textarea
           id="prompt"
+          maxLength={1000}
           value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
+          onChange={(e) => {
+            setPrompt(e.target.value);
+            if (error) setError(null);
+          }}
           placeholder="Enter your story prompt..."
           disabled={isLoading}
           rows={4}
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50"
         />
+
+        <p className="text-sm text-gray-500 mt-1">
+          {prompt.length}/1000 characters
+        </p>
       </div>
 
       {/* Variation Count */}
@@ -121,7 +141,11 @@ export const StoryGenerator: React.FC<StoryGeneratorProps> = ({ onStoryGenerated
       {/* Generate Button */}
       <button
         onClick={handleGenerate}
-        disabled={isLoading || !prompt.trim()}
+        disabled={
+          isLoading ||
+          prompt.trim().length < 10 ||
+          prompt.trim().length > 1000
+        }
         className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
       >
         {isLoading ? (
